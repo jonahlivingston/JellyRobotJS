@@ -11,7 +11,7 @@ import Login from './components/Login'
 import WhoAmI from './components/WhoAmI'
 import NotFound from './components/NotFound'
 import Homepage from './components/Homepage'
-import Multiplayer from './components/game/Multiplayer'
+import MultiPlayer from './components/game/MultiPlayer'
 import Training from './components/game/Training'
 import Loss from './components/game/Loss'
 import Win from './components/game/Win'
@@ -52,13 +52,21 @@ const onTrainingEnter = () => {
     socket.emit('singleTrainingRoom')
 }
 
+const onEnterHome = () => {
+    document.getElementById('main').style.height = '100%'
+}
+
+const onExitHome = () => {
+    document.getElementById('main').style.height = 'auto'
+}
+
 render(
     <Provider store={store}>
     <Router history={browserHistory}>
-      <Route path="/home" component={Homepage} />
+      <Route path="/home" component={Homepage} onEnter={onEnterHome} onExit={onExitHome} />
       <Route path="/" component={App} onEnter={onMainEnter} >
         <Route path="/docs" component={Docs} />
-        <Route path="/game" component={Multiplayer} onEnter={onGameEnter} />
+        <Route path="/game" component={MultiPlayer} onEnter={onGameEnter} />
         <Route path="/training" component={Training} onEnter={onTrainingEnter} />
         <Route path="/login" component={Login} />
         <IndexRedirect to="/home" />
